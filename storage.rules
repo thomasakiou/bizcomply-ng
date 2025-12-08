@@ -1,0 +1,44 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function getUserRole() {
+      return firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && getUserRole() in ['SuperAdmin', 'Agent'];
+    }
+    
+    // Documents storage
+    match /documents/{userId}/{fileName} {
+      // Users can read their own documents
+      allow read: if isOwner(userId) || isAdmin();
+      
+      // Users can upload their own documents
+      // Limit file size to 10MB
+      allow create: if isOwner(userId) && 
+                      request.resource.size < 10 * 1024 * 1024;
+      
+      // Users can delete their own documents
+      allow delete: if isOwner(userId);
+    }
+    
+    // Profile images (future use)
+    match /profile_images/{userId}/{fileName} {
+      allow read: if isAuthenticated();
+      allow create, update: if isOwner(userId) && 
+                              request.resource.size < 5 * 1024 * 1024;
+      allow delete: if isOwner(userId);
+    }
+  }
+}
