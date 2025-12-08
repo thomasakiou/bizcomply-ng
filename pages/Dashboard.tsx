@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
+import { Menu } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../src/hooks/useAuth';
 import { businessService } from '../src/services/businessService';
@@ -11,6 +12,7 @@ import LoadingSpinner from '../src/components/ui/LoadingSpinner';
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [tasks, setTasks] = useState<ComplianceTask[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -100,8 +102,8 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="flex flex-row min-h-screen bg-white">
-      <Sidebar />
-      <main className="flex-1 p-4 md:p-8 overflow-y-auto h-screen">
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <main className="flex-1 p-4 md:p-8 overflow-y-auto h-screen w-full">
         <div className="flex flex-col flex-1">
           {/* Header */}
           <div className="flex flex-wrap justify-between items-center gap-3 pb-4 border-b border-gray-200">
@@ -120,6 +122,14 @@ const Dashboard: React.FC = () => {
                 {notifications.length > 0 && (
                   <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
                 )}
+              </button>
+
+              {/* Mobile Menu Button */}
+              <button
+                className="md:hidden text-gray-600 hover:text-primary"
+                onClick={() => setSidebarOpen(true)}
+              >
+                <Menu className="w-6 h-6" />
               </button>
             </div>
           </div>
@@ -192,8 +202,8 @@ const Dashboard: React.FC = () => {
                       <div className="text-right">
                         <p className="text-sm font-medium text-gray-900">{formatDate(task.dueDate)}</p>
                         <span className={`inline-block px-2 py-1 text-xs rounded-full mt-1 ${task.priority === 'High' ? 'bg-red-100 text-red-800' :
-                            task.priority === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
-                              'bg-blue-100 text-blue-800'
+                          task.priority === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-blue-100 text-blue-800'
                           }`}>
                           {task.priority}
                         </span>
@@ -275,8 +285,8 @@ const Dashboard: React.FC = () => {
                     onClick={() => navigate('/notifications')}
                   >
                     <span className={`material-symbols-outlined ${notification.type === 'deadline' ? 'text-yellow-600' :
-                        notification.type === 'expiry' ? 'text-red-600' :
-                          'text-blue-600'
+                      notification.type === 'expiry' ? 'text-red-600' :
+                        'text-blue-600'
                       }`}>
                       {notification.type === 'deadline' ? 'schedule' :
                         notification.type === 'expiry' ? 'warning' :

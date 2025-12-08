@@ -5,13 +5,13 @@ import { getFirestore, initializeFirestore, persistentLocalCache, persistentMult
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDF0ZwmuwOxZcq6yi8Z6AZ6xphkN9fxXLk",
-    authDomain: "bizcomplyng.firebaseapp.com",
-    projectId: "bizcomplyng",
-    storageBucket: "bizcomplyng.firebasestorage.app",
-    messagingSenderId: "697778267096",
-    appId: "1:697778267096:web:4d7395bb7534526330c8ad",
-    measurementId: "G-NLFLLJ3N3W"
+    apiKey: "AIzaSyAKU8ffQA8M9JjsFk3jJOX0Dn6ZbqZgHwE",
+    authDomain: "datacomply-ng.firebaseapp.com",
+    projectId: "datacomply-ng",
+    storageBucket: "datacomply-ng.firebasestorage.app",
+    messagingSenderId: "709160697564",
+    appId: "1:709160697564:web:73b224e2985d5fafc93e19",
+    measurementId: "G-6P3YME0E8M"
 };
 
 // Initialize Firebase
