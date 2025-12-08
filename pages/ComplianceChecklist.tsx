@@ -231,6 +231,17 @@ const ComplianceChecklist: React.FC = () => {
                           <span className={`font-medium ${getPriorityColor(task.priority)}`}>
                             {task.priority} Priority
                           </span>
+                          {task.portalUrl && (
+                            <a
+                              href={task.portalUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-primary hover:underline font-medium"
+                            >
+                              Visit {task.authorityName || 'Portal'}
+                              <span className="material-symbols-outlined text-sm">open_in_new</span>
+                            </a>
+                          )}
                         </div>
                       </div>
 

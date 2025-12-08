@@ -70,6 +70,8 @@ export interface ComplianceTask {
     priority: 'Low' | 'Medium' | 'High';
     createdAt: Timestamp;
     updatedAt: Timestamp;
+    portalUrl?: string;
+    authorityName?: string;
 }
 
 export interface Document {
@@ -148,4 +150,6 @@ export interface ComplianceTaskFormData {
     category: ComplianceCategory;
     dueDate: Date;
     priority: 'Low' | 'Medium' | 'High';
+    portalUrl?: string;
+    authorityName?: string;
 }

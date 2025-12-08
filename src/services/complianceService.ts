@@ -149,6 +149,8 @@ function getDefaultTasksForBusinessType(businessType: BusinessType): ComplianceT
             category: 'CAC',
             dueDate: new Date(new Date().getFullYear(), 11, 31), // Dec 31
             priority: 'High',
+            portalUrl: 'https://post.cac.gov.ng/',
+            authorityName: 'CAC Portal',
         },
         {
             title: 'TIN Registration',
@@ -156,6 +158,8 @@ function getDefaultTasksForBusinessType(businessType: BusinessType): ComplianceT
             category: 'Tax',
             dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
             priority: 'High',
+            portalUrl: 'https://tin.jtb.gov.ng/',
+            authorityName: 'JTB Portal',
         },
     ];
 
@@ -166,6 +170,8 @@ function getDefaultTasksForBusinessType(businessType: BusinessType): ComplianceT
             category: 'VAT',
             dueDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000), // 60 days
             priority: 'Medium',
+            portalUrl: 'https://taxpromax.firs.gov.ng/',
+            authorityName: 'FIRS TaxPro Max',
         },
         {
             title: 'PAYE Remittance',
@@ -173,6 +179,8 @@ function getDefaultTasksForBusinessType(businessType: BusinessType): ComplianceT
             category: 'PAYE',
             dueDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 10), // 10th of next month
             priority: 'High',
+            portalUrl: 'https://lirs.gov.ng/',
+            authorityName: 'LIRS Portal (Lagos)',
         },
         {
             title: 'Pension Remittance',
@@ -180,6 +188,8 @@ function getDefaultTasksForBusinessType(businessType: BusinessType): ComplianceT
             category: 'Pension',
             dueDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 10),
             priority: 'High',
+            portalUrl: 'https://www.pencom.gov.ng/',
+            authorityName: 'PenCom',
         },
     ];
 
