@@ -1,6 +1,7 @@
 import React from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './src/contexts/AuthContext';
+import { useIdleTimeout } from './src/hooks/useIdleTimeout';
 import ProtectedRoute from './src/components/ProtectedRoute';
 
 // Landing page
@@ -30,140 +31,150 @@ import DocumentReview from './src/pages/admin/DocumentReview';
 import RegulationsManagement from './src/pages/admin/RegulationsManagement';
 import BroadcastAlerts from './src/pages/admin/BroadcastAlerts';
 
+// Component to handle idle timeout inside AuthProvider
+const AppContent: React.FC = () => {
+  // Enable auto-logout after 10 minutes of inactivity
+  useIdleTimeout();
+
+  return (
+    <HashRouter>
+      <Routes>
+        {/* Landing page */}
+        <Route path="/landing" element={<Landing />} />
+
+        {/* Public routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/verify-email" element={<EmailVerification />} />
+
+        {/* Protected routes */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/setup"
+          element={
+            <ProtectedRoute>
+              <ProfileSetup />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/compliance"
+          element={
+            <ProtectedRoute>
+              <ComplianceChecklist />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/documents"
+          element={
+            <ProtectedRoute>
+              <DocumentVault />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chat"
+          element={
+            <ProtectedRoute>
+              <AIChat />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/notifications"
+          element={
+            <ProtectedRoute>
+              <Notifications />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/analytics"
+          element={
+            <ProtectedRoute>
+              <Analytics />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/subscription"
+          element={
+            <ProtectedRoute>
+              <Subscription />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin routes */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute allowedRoles={['SuperAdmin', 'Admin', 'Agent']}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectedRoute allowedRoles={['SuperAdmin', 'Admin']}>
+              <UserManagement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/compliance"
+          element={
+            <ProtectedRoute allowedRoles={['SuperAdmin', 'Admin', 'Agent']}>
+              <ComplianceMonitoring />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/documents"
+          element={
+            <ProtectedRoute allowedRoles={['SuperAdmin', 'Admin', 'Agent']}>
+              <DocumentReview />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/regulations"
+          element={
+            <ProtectedRoute allowedRoles={['SuperAdmin', 'Admin']}>
+              <RegulationsManagement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/alerts"
+          element={
+            <ProtectedRoute allowedRoles={['SuperAdmin', 'Admin']}>
+              <BroadcastAlerts />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </HashRouter>
+  );
+};
+
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <HashRouter>
-        <Routes>
-          {/* Landing page */}
-          <Route path="/landing" element={<Landing />} />
-
-          {/* Public routes */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/verify-email" element={<EmailVerification />} />
-
-          {/* Protected routes */}
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/setup"
-            element={
-              <ProtectedRoute>
-                <ProfileSetup />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/compliance"
-            element={
-              <ProtectedRoute>
-                <ComplianceChecklist />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/documents"
-            element={
-              <ProtectedRoute>
-                <DocumentVault />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/chat"
-            element={
-              <ProtectedRoute>
-                <AIChat />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/notifications"
-            element={
-              <ProtectedRoute>
-                <Notifications />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/analytics"
-            element={
-              <ProtectedRoute>
-                <Analytics />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/subscription"
-            element={
-              <ProtectedRoute>
-                <Subscription />
-              </ProtectedRoute>
-            }
-          />
-
-          {/* Admin routes */}
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute allowedRoles={['SuperAdmin', 'Admin', 'Agent']}>
-                <AdminDashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/users"
-            element={
-              <ProtectedRoute allowedRoles={['SuperAdmin', 'Admin']}>
-                <UserManagement />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/compliance"
-            element={
-              <ProtectedRoute allowedRoles={['SuperAdmin', 'Admin', 'Agent']}>
-                <ComplianceMonitoring />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/documents"
-            element={
-              <ProtectedRoute allowedRoles={['SuperAdmin', 'Admin', 'Agent']}>
-                <DocumentReview />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/regulations"
-            element={
-              <ProtectedRoute allowedRoles={['SuperAdmin', 'Admin']}>
-                <RegulationsManagement />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/alerts"
-            element={
-              <ProtectedRoute allowedRoles={['SuperAdmin', 'Admin']}>
-                <BroadcastAlerts />
-              </ProtectedRoute>
-            }
-          />
-
-          {/* Fallback */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </HashRouter>
+      <AppContent />
     </AuthProvider>
   );
 };

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <!-- Main Gradient for the Sphere -->
+    <radialGradient id="sphereGrad" cx="30%" cy="30%" r="70%" fx="30%" fy="30%">
+      <stop offset="0%" style="stop-color:#4ade80;stop-opacity:1" /> <!-- lighter green highlight -->
+      <stop offset="50%" style="stop-color:#16a34a;stop-opacity:1" /> <!-- base green -->
+      <stop offset="100%" style="stop-color:#14532d;stop-opacity:1" /> <!-- dark green shadow -->
+    </radialGradient>
+    
+    <!-- Shadow filter -->
+    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="0" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge> 
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/> 
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Drop Shadow for the whole sphere -->
+  <ellipse cx="32" cy="56" rx="20" ry="4" fill="black" opacity="0.2" filter="url(#dropShadow)"/>
+
+  <!-- Main Sphere -->
+  <circle cx="32" cy="32" r="26" fill="url(#sphereGrad)" />
+
+  <!-- Specular highlight for extra gloss -->
+  <ellipse cx="24" cy="20" rx="12" ry="6" fill="white" opacity="0.3" transform="rotate(-45, 24, 20)" />
+
+  <!-- 3D Checkmark -->
+  <path d="M20 32 L28 40 L44 20" 
+        stroke="white" 
+        stroke-width="5" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="none" 
+        filter="url(#dropShadow)"
+        opacity="0.95"/>
+</svg>
