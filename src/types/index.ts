@@ -57,6 +57,8 @@ export type ComplianceCategory =
     | 'License'
     | 'Other';
 
+export type CompliancePriority = 'Low' | 'Medium' | 'High';
+
 export interface ComplianceTask {
     id: string;
     userId: string;
@@ -67,7 +69,7 @@ export interface ComplianceTask {
     status: ComplianceStatus;
     dueDate: Timestamp;
     completedDate?: Timestamp;
-    priority: 'Low' | 'Medium' | 'High';
+    priority: CompliancePriority;
     createdAt: Timestamp;
     updatedAt: Timestamp;
     portalUrl?: string;
@@ -149,7 +151,7 @@ export interface ComplianceTaskFormData {
     description: string;
     category: ComplianceCategory;
     dueDate: Date;
-    priority: 'Low' | 'Medium' | 'High';
+    priority: CompliancePriority;
     portalUrl?: string;
     authorityName?: string;
 }
